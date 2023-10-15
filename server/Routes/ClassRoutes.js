@@ -163,8 +163,13 @@ router.put('/edit/:classId', requireLogin, async (req, res) => {
           return res.status(404).json({ error: 'Class not found' });
         }
     
-        existingClass.title = title;
-        existingClass.description = description;
+        if(title) {
+            existingClass.title = title;
+        }
+        
+        if(description) {
+            existingClass.description = description;
+        }
     
         await existingClass.save();
     
