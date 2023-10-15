@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { NavLink } from "react-router-dom";
 
 export default function SignUp() {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const [user, setUser] = useState({
         username: "",
@@ -46,7 +47,7 @@ export default function SignUp() {
             }
             else {
                 console.log(data.Message);
-                // navigate("/signin");
+                navigate("/auth/signin");
             }
         })
         .catch(err => {
@@ -118,6 +119,10 @@ export default function SignUp() {
             </div>
 
             <button type="submit" onClick={signUp}>Sign Up</button>
+
+            <div>Already Have an account?
+                <NavLink style={{textDecoration: "none", color: "rgb(8,38,74)"}} to="/auth/signin"> Log In</NavLink>
+            </div>
         </div>
     )
 }

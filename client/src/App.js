@@ -1,11 +1,11 @@
-import CreateClass from "./Pages/CreateClass";
-import SignIn from "./Pages/SignIn";
-import SignUp from "./Pages/SignUp";
+import { Outlet } from "react-router-dom"
+import Navbar from "./Navbar"
 
 function App() {
   return (
     <div className="App">
-      <CreateClass />
+      <Navbar />
+      <Outlet />
     </div>
   );
 }
