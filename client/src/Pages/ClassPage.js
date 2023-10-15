@@ -33,6 +33,7 @@ export default function ClassPage() {
             {
                 display &&
                 <div>
+                    <Link className='add-content-button' to={`/createcontent/:{classId}`} >Add</Link>
                     <div>{classDetails.class.title}</div>
                     <div>{classDetails.class.description}</div>
                 </div>
@@ -40,4 +41,3 @@ export default function ClassPage() {
         </div>
     );
 }
-

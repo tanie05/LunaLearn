@@ -1,0 +1,11 @@
+.add-content-button{
+    text-decoration: none;
+    color: black;
+    background-color: #B39DDB;
+    padding: 8px 20px;
+    font-size: 25px;
+    border: 1px solid black;
+    border-radius: 5px;
+    text-align: center;
+    
+}

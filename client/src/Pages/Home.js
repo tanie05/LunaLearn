@@ -28,7 +28,7 @@ export default function Home() {
 
     
     return (
-        <div>
+        <div className="class-cards-container">
             {state && classes.length > 0 && 
                 classes.map(item => {
                     return (
