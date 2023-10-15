@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import '../PagesCSS/CreateClass.css';
+import {Navigate} from "react-router-dom"
 
 export default function CreateClass() {
     const [newClass, setNewClass] = useState({
         title: "",
         description: ""
     })
+
+    const [redirect, setRedirect] = useState(false);
 
     function updateClass(e) {
         const {name, value} = e.target
@@ -21,10 +24,11 @@ export default function CreateClass() {
     }
 
     function createClass() {
-        fetch("/classes/createClass", {
+        fetch("/classes/createclass", {
             method: "post",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
             },
             body: JSON.stringify({
                 title: newClass.title,
@@ -35,7 +39,7 @@ export default function CreateClass() {
         .then(data => {
             if(data.success)
             {
-                console.log(data.message);
+                setRedirect(true);
             }
             else {
                 console.log("Failed to create a class");
@@ -43,6 +47,10 @@ export default function CreateClass() {
         })
     }
 
+    if(redirect){
+        return <Navigate to={'/'} />
+    }
+    
     return (
         <div className="create-class-page">
             <div className="create-class-form">
