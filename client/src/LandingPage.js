@@ -7,6 +7,7 @@ import App from "./App"
 import Home from "./Pages/Home"
 import CreateClass from "./Pages/CreateClass";
 import JoinClass from "./Pages/JoinClass";
+import ClassPage from "./Pages/ClassPage";
 
 
 export const UserContext = React.createContext()
@@ -35,7 +36,7 @@ const Routing = () => {
             <Route exact path="" Component={Home}></Route>
             <Route exact path="classes/createClass" Component={CreateClass}></Route>
             <Route exact path="classes/joinClass" Component={JoinClass}></Route>
-            <Route exact path="classes/:classId" Component={JoinClass}></Route>
+            <Route exact path="classes/:classId" Component={ClassPage}></Route>
         </Route>
     </Routes>
   )
