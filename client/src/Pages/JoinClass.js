@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"
+import '../PagesCSS/JoinClass.css'
 
 export default function JoinClass() {
     const navigate = useNavigate()
@@ -35,7 +36,8 @@ export default function JoinClass() {
     }
 
     return (
-        <div>
+        <div className="join--class">
+        <div className="join--class--form">
             <input 
                 className="input--class--code"
                 type="text"
@@ -46,7 +48,9 @@ export default function JoinClass() {
             >
             </input>
 
-            <button type="submit" onClick={joinClass}>Join Class</button>
+            <button type="submit" onClick={joinClass} className="join--class--btn">Join Class</button>
         </div>
+        </div>
+        
     )
 }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { NavLink } from "react-router-dom";
+import '../PagesCSS/SignUp.css';
 
 export default function SignUp() {
     const navigate = useNavigate();
@@ -57,7 +58,8 @@ export default function SignUp() {
 
 
     return (
-        <div>
+        <div className="sigup-page">
+        <div className="signup-form">
             <input 
                 className="input--username"
                 type="text"
@@ -118,11 +120,13 @@ export default function SignUp() {
                 </label>
             </div>
 
-            <button type="submit" onClick={signUp}>Sign Up</button>
+            <button className="submit-btn" type="submit" onClick={signUp}>Sign Up</button>
 
-            <div>Already Have an account?
+            <div className="message">Already Have an account?
                 <NavLink style={{textDecoration: "none", color: "rgb(8,38,74)"}} to="/auth/signin"> Log In</NavLink>
             </div>
         </div>
+        </div>
+        
     )
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import '../PagesCSS/CreateClass.css';
 
 export default function CreateClass() {
     const [newClass, setNewClass] = useState({
@@ -43,7 +44,8 @@ export default function CreateClass() {
     }
 
     return (
-        <div>
+        <div className="create-class-page">
+            <div className="create-class-form">
             <input 
                 className="input--class--title"
                 type="text"
@@ -62,7 +64,9 @@ export default function CreateClass() {
             >
             </textarea>
 
-            <button type="submit" onClick={createClass}>Create Class</button>
+            <button className="submit-btn" type="submit" onClick={createClass}>Create Class</button>
         </div>
+        </div>
+        
     )
 }

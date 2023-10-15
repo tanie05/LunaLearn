@@ -3,6 +3,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { TbLogout } from "react-icons/tb";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "./LandingPage";
+import './PagesCSS/Navbar.css'
 
 export default function NavBar() {
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function NavBar() {
             state && 
             <div className="navbar">
                 <div className="navbar--title">
-                    <NavLink to="">
+                    <NavLink to="" style={{textDecoration: 'none', color: '#333333'}} >
                         LunaLearn
                     </NavLink>
                 </div>

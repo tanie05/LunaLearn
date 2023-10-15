@@ -12,7 +12,7 @@ router.post('/createclass', requireLogin, async (req,res) => {
     
     try{
         const teacher = req.user._id;
-        const {title, description, coverImage} = req.body;
+        const {title, description} = req.body;
         const students = [];
         const code =  shortid.generate()
 
@@ -113,10 +113,6 @@ router.get('/:classId', requireLogin, async (req, res) => {
         }
 
         const classroom = await Class.findById(classId);
-
-        if (!classroom || !classroom.students.includes(userId)) {
-            return res.status(403).json({ error: 'You do not belong to this class' });
-        }
 
         const contents = await Content.find({ classId });
 
