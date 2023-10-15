@@ -24,7 +24,12 @@ const UserSchema = new Schema({
         type: String,
         enum: ["Teacher", "Student"],
         default: "Student"
-    }
+    },
+    classList: {
+        type: Schema.Types.ObjectId,
+        ref: 'Class'
+    },
+    
 }, {timestamps: true})
 
 const User = mongoose.model("User", UserSchema)

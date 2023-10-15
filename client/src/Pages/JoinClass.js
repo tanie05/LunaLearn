@@ -18,7 +18,7 @@ export default function JoinClass() {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
             },
             body: JSON.stringify({
-                classCode: code
+                code: code
             })
         })
         .then(res => res.json())

@@ -8,6 +8,7 @@ const JWT_SECRET = process.env.JWT_SECRET
 
 
 router.post("/signup", (req, res) => {
+    
     const {username, email, password, profileImage, role} = req.body
     if(!username || !email || !password) {
         return res.status(422).json({Error: "Please add all the fields"})
