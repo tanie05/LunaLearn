@@ -3,14 +3,12 @@ import { useParams } from 'react-router-dom';
 
 export default function ClassPage() {
     const {classId} = useParams()
-    const [classDetails, setClassDetails] = useState({
-        class: {},
-        content: [],
-        teacher: {}
-    })
 
-    useEffect(async() => {
-        await fetch(`/classes/${classId}`, {
+    const [classDetails, setClassDetails] = useState({})
+    const [display, setDisplay] = useState(false)
+
+    useEffect(() => {
+        fetch(`/classes/${classId}`, {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
             }
@@ -21,46 +19,24 @@ export default function ClassPage() {
                 console.log(data.error);
             }
             else {
-                setClassDetails(prevState => {
-                    return ({
-                        ...prevState,
-                        class: data.class,
-                        content: data.content
-                    })
-                })
+                // console.log(data);
+                setClassDetails(data)
+                setDisplay(true)
             }
         })
-
-        if(classDetails.class.teacher) {
-            fetch(`/users/${classDetails.class.teacher}`, {
-                headers: {
-                    "Authorization": "Bearer " + localStorage.getItem("jwt")
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.error) {
-                    console.log("Error");
-                }
-                else {
-                    // console.log(data.user.username);
-                    setClassDetails(prevState => {
-                        return ({
-                            ...prevState,
-                            teacher: data.user
-                        })
-                    })
-                }
-            })
-        }
     }, [])
 
-    console.log(classDetails);
+    // console.log(classDetails);
 
     return (
         <div>
-            <div>{classDetails.class.title}</div>
-            {/* <div>{classDetails.class}</div> */}
+            {
+                display &&
+                <div>
+                    <div>{classDetails.class.title}</div>
+                    <div>{classDetails.class.description}</div>
+                </div>
+            }
         </div>
     );
 }
