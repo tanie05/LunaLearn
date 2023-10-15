@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { NavLink } from "react-router-dom";
+import { UserContext } from "../LandingPage";
 
 export default function SignIn() {
-    // const navigate = useNavigate();
+    const {state, dispatch} = React.useContext(UserContext)
+
+    const navigate = useNavigate();
 
     const [user, setUser] = useState({
         email: "",
@@ -42,8 +46,8 @@ export default function SignIn() {
             else {
                 localStorage.setItem("jwt", data.token)
                 localStorage.setItem("user", JSON.stringify(data.user))
-                // dispatch({type: "USER", payload: data.user})
-                // navigate("/");
+                dispatch({type: "USER", payload: data.user})
+                navigate("/");
             }
         })
         .catch(err => {
@@ -74,6 +78,10 @@ export default function SignIn() {
             </input>
 
             <button type="submit" onClick={signIn}>Sign In</button>
+
+            <div>Don't Have an account?
+                <NavLink style={{textDecoration: "none", color: "rgb(8,38,74)"}} to="/auth/signup"> Sign Up</NavLink>
+            </div>
         </div>
     )
 }
