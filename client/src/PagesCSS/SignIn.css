@@ -1,0 +1,48 @@
+.signin-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+}
+
+.signin-form {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input--email, .input--password, .input--username {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: calc(100% - 20px);
+    box-sizing: border-box;
+}
+
+.message {
+    color: #FF0000; 
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.submit-btn {
+    padding: 10px 20px;
+    background-color:  #FFEE58;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color:  #fbec69; 
+}

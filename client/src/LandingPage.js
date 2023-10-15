@@ -35,6 +35,7 @@ const Routing = () => {
             <Route exact path="" Component={Home}></Route>
             <Route exact path="classes/createClass" Component={CreateClass}></Route>
             <Route exact path="classes/joinClass" Component={JoinClass}></Route>
+            <Route exact path="classes/:classId" Component={JoinClass}></Route>
         </Route>
     </Routes>
   )

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../LandingPage";
+import '../PagesCSS/SignIn.css'
 
 export default function SignIn() {
     const {state, dispatch} = React.useContext(UserContext)
@@ -57,7 +58,8 @@ export default function SignIn() {
 
 
     return (
-        <div>
+        <div className="signin-form-container">
+            <div className="signin-form">
             <input
                 className="input--email"
                 type="email"
@@ -77,11 +79,13 @@ export default function SignIn() {
             >
             </input>
 
-            <button type="submit" onClick={signIn}>Sign In</button>
+            <button type="submit" onClick={signIn} className="submit-btn" >Sign In</button>
 
-            <div>Don't Have an account?
+            <div className="message">Don't Have an account?
                 <NavLink style={{textDecoration: "none", color: "rgb(8,38,74)"}} to="/auth/signup"> Sign Up</NavLink>
             </div>
         </div>
+        </div>
+        
     )
 }
