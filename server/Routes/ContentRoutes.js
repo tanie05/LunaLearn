@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const requireLogin = require('../Middleware/requireLogin')
 const Content = require('../Models/ContentModel')
-
+  
 // creating content
 router.post('/', requireLogin, async (req,res) => {
     const {contentType, description, media, classId} = req.body;
