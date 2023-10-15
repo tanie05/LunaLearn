@@ -25,7 +25,6 @@ const UserSchema = new Schema({
         enum: ["Teacher", "Student"],
         default: "Student"
     },
-
     classList: {
         type: Schema.Types.ObjectId,
         ref: 'Class'
