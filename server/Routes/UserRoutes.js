@@ -3,8 +3,8 @@ const requireLogin = require('../Middleware/requireLogin')
 const User = require('../Models/UserModel')
 
 
-router.get('/', requireLogin, async (req, res) => {
-    const userId = req.body.userId
+router.get('/:userId', requireLogin, async (req, res) => {
+    const userId = req.params.userId
 
     try {
         const user = await User.findById(userId)
