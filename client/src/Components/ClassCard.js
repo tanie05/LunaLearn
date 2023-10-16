@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import '../PagesCSS/ClassCard.css'
 import { Link } from "react-router-dom";
 
 export default function ClassCard(props) {
+
+//    console.log(props.item._id);
+
     const [teacher, setTeacher] = useState({});
 
     useEffect(() => {
@@ -57,9 +60,11 @@ export default function ClassCard(props) {
 
 
 
+    const [redirect, setRedirect] = useState(false);
 
     function deleteClass() {
-        // console.log(props.item._id);
+
+        // console.log(props.item);
         fetch(`/classes/delete/${props.item._id}`, {
             method: "put",
             headers: {
@@ -73,11 +78,14 @@ export default function ClassCard(props) {
             }
             else {
                 console.log("class deleted")
-                window.location.href = window.location.href;
+                setRedirect(true);
             }
         })
     }
     
+    if(redirect){
+        return <Navigate to={`/`} />
+    }
     return (
         
             <div className="class-card-container">

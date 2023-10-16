@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router';
 import '../PagesCSS/CreateContent.css';
-
+import { Navigate } from 'react-router-dom';
 
 export default function CreateContentForm() {
-
+  
+  const location = useLocation();
+  const contentToEdit = location.state;
     
   const { classId } = useParams();
+
+  // console.log(classId)
   const [content, setContent] = useState({
     contentType: '',
     description: '',
     media: [],
-    classId: classId,
+    classId: classId
   });
 
   function handleTypeChange(e) {
@@ -48,36 +52,92 @@ export default function CreateContentForm() {
     }
   };
 
+  const [redirect, setRedirect] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+
+  useEffect(() => {
+    if(contentToEdit){
+
+      setEditMode(true);
+
+      setContent({
+        contentType: contentToEdit.contentType,
+        description: contentToEdit.description,
+        media: contentToEdit.media,
+        classId: contentToEdit.classId
+      })
+    }
+  },[])
+
   function handleSubmit(event) {
     event.preventDefault();
+    console.log(content);
 
-    // creating content
-    fetch("/contents", {
-      method: "post",
-      headers: {
-          "Content-Type": "application/json"
-      },
-      body: JSON.stringify(content)
-    })
-    .then(res => {
-      if (!res.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return res.json();
-    })
-    .then(data => {
-      if(data.success) {
-        console.log(data.message);
-      } else {
-        console.log("Failed to create content");
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-    
-    
+    if(editMode){
+      // editing
+      // /edit/:contentId
+      // console.log(content)
+
+      fetch(`/contents/edit/${contentToEdit._id}`, {
+        method: "put",
+        headers: {
+          "Content-Type" : "application/json",
+          "Authorization" : "Bearer " + localStorage.getItem("jwt")
+        },
+        body: JSON.stringify({
+          contentType: content.contentType,
+          description: content.description,
+          media: content.media,
+          classId: content.classId
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.success){
+          setRedirect(true);
+        }
+        else{
+          console.log("Failed to edit the content")
+        }
+      })
+    }
+    else{
+
+      // creating content
+      fetch("/contents/", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("jwt")
+        },
+        body: JSON.stringify({
+          contentType: content.contentType,
+          description: content.description,
+          media: content.media,
+          classId: content.classId
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          console.log(data.message);
+          setRedirect(true);
+        } else {
+          console.log("Failed to create content");
+        }
+        console.log(data)
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+          
   }
+
+  if(redirect){
+    return (<Navigate to = {`/classes/${content.classId}`} />) 
+  }
+
   return (
     <div className='content-form-container'>
 
@@ -87,8 +147,8 @@ export default function CreateContentForm() {
 
           <option value=''>Type of Content</option>
           <option value='Notes'>Notes</option>
-          <option value='Assignment'>Assignment</option>
-          <option value='Announcement'>Announcement</option>
+          <option value='Assignments'>Assignment</option>
+          <option value='Announcements'>Announcement</option>
 
         </select>
 

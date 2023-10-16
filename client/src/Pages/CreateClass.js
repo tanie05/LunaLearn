@@ -45,7 +45,7 @@ export default function CreateClass() {
     }
 
     function createClass() {
-
+        
         if(editMode){
             // editing
             // /edit/:classId
@@ -130,6 +130,6 @@ export default function CreateClass() {
                 </button>
         </div>
         </div>
-        
+               
     )
 }
