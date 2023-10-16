@@ -88,21 +88,23 @@ export default function ClassCard(props) {
     if(redirect){
         return <Navigate to={`/`} />
     }
+   
     return (
         
             <div className="class-card-container">
 
-            <NavLink to={`classes/${props.item._id}`}>
+            <NavLink to={`classes/${props.item._id}`} className="navlink">
             <div className="class-card-info" style={{ backgroundColor: randomColor }}>
-                                <div className="card-items class-title">{props.item.title}</div>
-                                <div className="card-items teacher-name">{teacher.username}</div>
+                                <div className="card-items class-title" >{props.item.title}</div>
+                                <div className="card-items teacher-name">Teacher : {teacher.username}</div>
                             </div>
             </NavLink>
-              
+               
             
                 {state._id === props.item.teacher && 
                     <div className="class-card-icon-containers">
-                        
+                         <div className="class-code class-code-card" style={{color: "black"}}>Code : {props.item.code}</div>
+                        <div className="iconsss">
                         <Link to= {'/classes/createClass'} state= {props.item} >
                         <BiSolidEditAlt className="card-items" />
                         </Link>
@@ -110,6 +112,8 @@ export default function ClassCard(props) {
                         <div onClick={deleteClass}>
                             <MdDelete className="card-items" />
                         </div>
+                        </div>
+                        
                     </div>
                 }
             </div>

@@ -9,26 +9,29 @@ import { UserContext } from '../LandingPage'
 
 export default function ContentCard(props) {
   const { contentType, description, media, classId } = props.item;
+  const teacher = props.teacherId;
+  const [teacherName, setTeacherName] = useState("");
+
   const [redirect, setRedirect] = useState(false);
-  const [teacher, setTeacher] = useState();
   const {state, dispatch} = React.useContext(UserContext);
 
   useEffect(() => {
-    fetch(`/classes/${classId}`, {
+    
+    // fetch teacher name
+    fetch(`/users/${teacher}`, {
       headers: {
           "Authorization": "Bearer " + localStorage.getItem("jwt")
       }
-    })
-    .then(res => res.json())
-    .then(data => {
-        if(data.error) {
-            console.log(data.error);
-        }
-        else {
-            // console.log(data);
-            setTeacher(data.class.teacher);
-        }
-    })
+  })
+  .then(res => res.json())
+  .then(data => {
+      if(data.error) {
+          console.log("Error");
+      }
+      else {
+          setTeacherName(data.user.username);
+      }
+  });
   },[])
 
   function deleteContent() {
@@ -57,7 +60,8 @@ export default function ContentCard(props) {
 
   return (
     <div className="content-card">
-      <h2 className='content-title'>{contentType}</h2>
+      {/* <h2 className='content-title'>{contentType}</h2> */}
+      <p className='heading'>{teacherName} Posted {contentType}</p>
       <p className='content-description'>{description}</p>
 
       {
@@ -67,10 +71,10 @@ export default function ContentCard(props) {
 
         <div className='icons-container'>
         <Link to= {`/createcontent/${props.item.classId}`} state={props.item}  >
-          <BiSolidEditAlt className="card-items" />
+          <BiSolidEditAlt className="icon-items" />
         </Link>
         <div onClick={deleteContent}>
-          <MdDelete className = "card-items"/>
+          <MdDelete className = "icon-items"/>
         </div>
       </div>
       }

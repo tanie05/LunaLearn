@@ -105,6 +105,7 @@ export default function CreateClass() {
     
     return (
         <div className="create-class-page">
+            
             <div className="create-class-form">
             <input 
                 className="input--class--title"

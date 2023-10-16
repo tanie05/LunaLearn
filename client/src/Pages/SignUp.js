@@ -44,7 +44,7 @@ export default function SignUp() {
         .then(res => res.json())
         .then(data => {
             if(data.Error) {
-                console.log(data.Error);
+                alert(data.Error);
             }
             else {
                 console.log(data.Message);
@@ -52,7 +52,8 @@ export default function SignUp() {
             }
         })
         .catch(err => {
-            console.log(err);
+            
+            console.log(err)
         })
     }
 

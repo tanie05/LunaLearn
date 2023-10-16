@@ -29,6 +29,8 @@ export default function ClassPage() {
                 setDisplay(true)
             }
         })
+
+        
     }, [])
 
     // console.log(classDetails.content);
@@ -47,21 +49,31 @@ export default function ClassPage() {
             <div>
             {
                 display &&
-                <>
                 <div className='class-details'>
+                <div className='class-header'>
                     
                     <div className='title'>{classDetails.class.title}</div>
-                    <div className='description'>{classDetails.class.description}</div>
-
-                    
+                    {
+                    state._id === classDetails.class.teacher &&
+                    <div className='class-code'>Code : {classDetails.class.code}</div>
+                    } 
                 </div>
+                
+                <div className='description--add--btn'>
+                <div className='description'>
+                    {classDetails.class.description}
+                </div>
+
                 <div>
                     {
                     state._id === classDetails.class.teacher &&
-                    <Link className='add-content-button' to={`/createcontent/${classId}`} >Add</Link>
+                    <Link className='add-content-button' to={`/createcontent/${classId}`}>
+                        Create Content
+                    </Link>
                     }
                 </div>
-                </>
+                </div>
+                </div>
                 
                
             }
@@ -73,7 +85,7 @@ export default function ClassPage() {
             {display && 
                 classDetails.content.map(item => {
                     return (
-                        <ContentCard item = {item} />
+                        <ContentCard item = {item} teacherId = {classDetails.class.teacher} />
                     )
                 })
             }

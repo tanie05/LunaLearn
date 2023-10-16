@@ -26,7 +26,8 @@ export default function JoinClass() {
         .then(data => {
             if(data.error)
             {
-                console.log(data.error);
+                alert(data.error);
+                // console.log(data.error);
             }
             else {
                 console.log(data.message);

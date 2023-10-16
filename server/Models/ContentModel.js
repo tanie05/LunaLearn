@@ -10,7 +10,7 @@ const ContentSchema = new Schema({
     },
     contentType: {
         type: String,
-        enum: ['Notes', 'Announcements', 'Assignments'],
+        enum: ['Notes', 'Announcement', 'Assignment'],
         required: true,
     },
     description: {

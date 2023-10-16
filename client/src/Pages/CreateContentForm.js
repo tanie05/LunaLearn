@@ -128,7 +128,8 @@ export default function CreateContentForm() {
         console.log(data)
       })
       .catch(error => {
-        console.error('Error:', error);
+        // console.error('Error:', error);
+        alert(error)
       });
     }
           
@@ -147,8 +148,8 @@ export default function CreateContentForm() {
 
           <option value=''>Type of Content</option>
           <option value='Notes'>Notes</option>
-          <option value='Assignments'>Assignment</option>
-          <option value='Announcements'>Announcement</option>
+          <option value='Assignment'>Assignment</option>
+          <option value='Announcement'>Announcement</option>
 
         </select>
 
