@@ -4,9 +4,11 @@ import { MdDelete } from "react-icons/md";
 import { NavLink, useNavigate } from "react-router-dom";
 import '../PagesCSS/ClassCard.css'
 import { Link } from "react-router-dom";
+import { UserContext } from "../LandingPage";
 
 export default function ClassCard(props) {
     const [teacher, setTeacher] = useState({});
+    const {state, dispatch} = React.useContext(UserContext)
 
     useEffect(() => {
         fetch(`/users/${props.item.teacher}`, {
@@ -90,7 +92,7 @@ export default function ClassCard(props) {
             </NavLink>
               
             
-                {teacher._id === props.item.teacher && 
+                {state._id === props.item.teacher && 
                     <div className="class-card-icon-containers">
                         
                         <Link to= {'/classes/createClass'} state= {props.item} >

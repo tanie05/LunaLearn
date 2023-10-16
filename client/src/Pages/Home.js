@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import UserContext from "../LandingPage"
 import ClassCard from "../Components/ClassCard"
+import { UserContext } from "../LandingPage";
 
 export default function Home() {
-    const state = localStorage.getItem('jwt')
+    const {state, dispatch} = React.useContext(UserContext);
     const [classes, setClasses] = useState([]);
 
     useEffect(() => {
