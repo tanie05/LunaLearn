@@ -31,6 +31,8 @@ export default function NavBar() {
                         LunaLearn
                     </NavLink>
                 </div>
+
+                <div>Welcome {state.username}</div>
                 
                 <div className="navbar--links">
                     <NavLink style={{textDecoration: 'none', color: "black"}} to = {role === "Teacher" ? "classes/createClass" : "classes/joinClass"}>

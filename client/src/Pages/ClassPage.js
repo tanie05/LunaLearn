@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../LandingPage';
 import ContentCard from '../Components/ContentCard';
+import "../PagesCSS/ClassPage.css";
 
 export default function ClassPage() {
     const {classId} = useParams()
@@ -46,21 +47,25 @@ export default function ClassPage() {
             <div>
             {
                 display &&
+                <>
+                <div className='class-details'>
+                    
+                    <div className='title'>{classDetails.class.title}</div>
+                    <div className='description'>{classDetails.class.description}</div>
+
+                    
+                </div>
                 <div>
-                    
-                    
-
-                    <div>{classDetails.class.title}</div>
-                    <div>{classDetails.class.description}</div>
-
                     {
-                        state._id === classDetails.class.teacher &&
-                        <Link className='add-content-button' to={`/createcontent/${classId}`} >Add</Link>
+                    state._id === classDetails.class.teacher &&
+                    <Link className='add-content-button' to={`/createcontent/${classId}`} >Add</Link>
                     }
                 </div>
-
+                </>
                 
+               
             }
+
         </div>
 
         <div>
