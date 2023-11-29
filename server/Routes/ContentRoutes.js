@@ -47,7 +47,7 @@ router.get('/:contentId', requireLogin, async (req, res) => {
 router.put('/edit/:contentId', requireLogin, async (req, res) => {
     const contentId = req.params.contentId
 
-    const { description, media } = req.body;
+    const { description, media, contentType, classId } = req.body;
 
     try {
         const existingContent = await Content.findById(contentId)
@@ -62,10 +62,17 @@ router.put('/edit/:contentId', requireLogin, async (req, res) => {
         if(description) {
             existingContent.description = description;
         }
+        if(contentType){
+            existingContent.contentType = contentType;
+        }
+        if(classId){
+            existingContent.classId = classId;
+        }
 
+        
         await existingContent.save();
 
-        res.json({ message: "Content updated successfully", updatedContent: existingContent });
+        res.json({success:true, message: "Content updated successfully", updatedContent: existingContent });
     }
     catch (error) {
         console.log(error);
@@ -87,11 +94,11 @@ router.put('/delete/:contentId', requireLogin, async (req, res) => {
 
         await Content.deleteOne({ _id: contentId });
 
-        res.json({ message: "Content deleted succesfully" })
+        res.json({success: true, message: "Content deleted succesfully" })
     }
     catch (error) {
         console.log(error);
-        res.status(500).json({ error: 'Server error' })
+        res.status(500).json({success: false, error: 'Server error' })
     }
 })
 

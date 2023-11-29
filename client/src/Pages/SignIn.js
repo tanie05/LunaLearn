@@ -42,7 +42,7 @@ export default function SignIn() {
         .then(res => res.json())
         .then(data => {
             if(data.Error) {
-                console.log(data.Error);
+                alert(data.Error);
             }
             else {
                 localStorage.setItem("jwt", data.token)
@@ -53,6 +53,7 @@ export default function SignIn() {
         })
         .catch(err => {
             console.log(err);
+            // alert(err)
         })
     }
 

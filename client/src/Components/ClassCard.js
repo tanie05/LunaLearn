@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import '../PagesCSS/ClassCard.css'
 import { Link } from "react-router-dom";
 import { UserContext } from "../LandingPage";
 
 export default function ClassCard(props) {
+
+//    console.log(props.item._id);
+
     const [teacher, setTeacher] = useState({});
     const {state, dispatch} = React.useContext(UserContext)
 
@@ -59,9 +62,11 @@ export default function ClassCard(props) {
 
 
 
+    const [redirect, setRedirect] = useState(false);
 
     function deleteClass() {
-        // console.log(props.item._id);
+
+        // console.log(props.item);
         fetch(`/classes/delete/${props.item._id}`, {
             method: "put",
             headers: {
@@ -75,26 +80,31 @@ export default function ClassCard(props) {
             }
             else {
                 console.log("class deleted")
-                window.location.href = window.location.href;
+                setRedirect(true);
             }
         })
     }
     
+    if(redirect){
+        return <Navigate to={`/`} />
+    }
+   
     return (
         
             <div className="class-card-container">
 
-            <NavLink to={`classes/${props.item._id}`}>
+            <NavLink to={`classes/${props.item._id}`} className="navlink">
             <div className="class-card-info" style={{ backgroundColor: randomColor }}>
-                                <div className="card-items class-title">{props.item.title}</div>
-                                <div className="card-items teacher-name">{teacher.username}</div>
+                                <div className="card-items class-title" >{props.item.title}</div>
+                                <div className="card-items teacher-name">Teacher : {teacher.username}</div>
                             </div>
             </NavLink>
-              
+               
             
                 {state._id === props.item.teacher && 
                     <div className="class-card-icon-containers">
-                        
+                         <div className="class-code class-code-card" style={{color: "black"}}>Code : {props.item.code}</div>
+                        <div className="iconsss">
                         <Link to= {'/classes/createClass'} state= {props.item} >
                         <BiSolidEditAlt className="card-items" />
                         </Link>
@@ -102,6 +112,8 @@ export default function ClassCard(props) {
                         <div onClick={deleteClass}>
                             <MdDelete className="card-items" />
                         </div>
+                        </div>
+                        
                     </div>
                 }
             </div>

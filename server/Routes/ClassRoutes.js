@@ -135,7 +135,7 @@ router.get("/", requireLogin, async (req, res) => {
             classes = await Class.find({ teacher: userId })
         }
         else {
-            classes = await Class.find({})
+            classes = await Class.find({students: userId})
         }
 
         res.json({ classes });
@@ -169,7 +169,7 @@ router.put('/edit/:classId', requireLogin, async (req, res) => {
     
         await existingClass.save();
     
-        res.json({success: true, message: 'Class updated successfully', updatedClass: existingClass });
+        res.json({success:true, message: 'Class updated successfully', updatedClass: existingClass });
       } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Server error' });

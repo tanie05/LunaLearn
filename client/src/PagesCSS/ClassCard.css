@@ -1,3 +1,9 @@
+/* Font Family */
+body {
+    font-family: 'lora', sans-serif; /* Replace with preferred font-family */
+}
+
+/* Class Cards Container */
 .class-cards-container {
     display: flex;
     flex-wrap: wrap; 
@@ -5,6 +11,7 @@
     padding: 20px;
 }
 
+/* Class Card Container */
 .class-card-container {
     width: 300px; 
     background-color: #FFFFFF;
@@ -16,31 +23,42 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative; /* Added position relative */
 }
 
 .class-card-container:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+
 .class-card-info {
-    padding: 20px;
-    background-color: #FFD3E0;
+    padding: 10px;
+    background-image: linear-gradient(to bottom, #d3e3fb, #fcfcfb); /* Added gradient background */
     border-radius: 10px;
-    height: fit-content;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
+
 .class-title {
-    font-size: 30px;
+    font-size: 28px;
     font-weight: bold;
-    margin-bottom: 8px; 
-    text-decoration: none;
+    margin-bottom: 8px;
+    display: block; 
+    padding-bottom: 10px;
+    font-family: 'Montserrat';
 }
+
 
 .teacher-name {
     margin-top: 10px;
-    font-size: 14px; 
+    font-size: 16px; 
     font-weight: normal;
+    font-family: 'roboto';
 }
+
 
 .card-items {
     text-decoration: none;
@@ -50,12 +68,28 @@
 
 .class-card-icon-containers {
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
+    
 }
+
 
 .class-card-icon-containers > div {
     margin: 0 8px;
     cursor: pointer;
     transition: color 0.3s ease-in-out; 
+    color: #5e6e98; 
 }
 
+.class-card-icon-containers > div:hover {
+    color: #e4ba4c; 
+}
+.navlink{
+    text-decoration: none;
+}
+.class-code-card{
+    padding: 5px;
+}
+
+.iconsss{
+    display: flex;
+}

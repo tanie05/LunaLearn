@@ -45,7 +45,7 @@ export default function CreateClass() {
     }
 
     function createClass() {
-
+        
         if(editMode){
             // editing
             // /edit/:classId
@@ -105,6 +105,7 @@ export default function CreateClass() {
     
     return (
         <div className="create-class-page">
+            
             <div className="create-class-form">
             <input 
                 className="input--class--title"
@@ -130,6 +131,6 @@ export default function CreateClass() {
                 </button>
         </div>
         </div>
-        
+               
     )
 }

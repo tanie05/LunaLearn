@@ -4,8 +4,9 @@ import { TbLogout } from "react-icons/tb";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "./LandingPage";
 import './PagesCSS/Navbar.css'
-
+import lunaicon from './lunaIcon.jpg';
 export default function NavBar() {
+
     const navigate = useNavigate();
     const {state, dispatch} = React.useContext(UserContext)
 
@@ -28,9 +29,13 @@ export default function NavBar() {
             <div className="navbar">
                 <div className="navbar--title">
                     <NavLink to="" style={{textDecoration: 'none', color: '#333333'}} >
-                        LunaLearn
+                    <img src = {lunaicon} className="icon"/>
+                    
+                        
                     </NavLink>
                 </div>
+
+                <div className="welcome-message">Welcome {state.username}!</div>
                 
                 <div className="navbar--links">
                     <NavLink style={{textDecoration: 'none', color: "black"}} to = {role === "Teacher" ? "classes/createClass" : "classes/joinClass"}>

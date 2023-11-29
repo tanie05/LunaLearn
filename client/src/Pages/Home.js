@@ -3,11 +3,12 @@ import ClassCard from "../Components/ClassCard"
 import { UserContext } from "../LandingPage";
 
 export default function Home() {
-    const {state, dispatch} = React.useContext(UserContext);
+    const {state} = React.useContext(UserContext);
     const [classes, setClasses] = useState([]);
+    const [flag, setFlag] = useState(false);
 
     useEffect(() => {
-        fetch("/classes", {
+        fetch("/classes/", {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
             }
@@ -20,6 +21,7 @@ export default function Home() {
             else {
                 // console.log(data.classes);
                 setClasses(data.classes);
+                setFlag(true)
             }
         })
     }, [])
@@ -38,6 +40,9 @@ export default function Home() {
                         />
                     )
                 })
+            }
+            {
+                state && (flag ? classes.length === 0 && <h3>No result</h3> : <h3>Loading...</h3>)
             }
         </div>
     )
