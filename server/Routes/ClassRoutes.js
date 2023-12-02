@@ -150,9 +150,8 @@ router.get("/", requireLogin, async (req, res) => {
 router.put('/edit/:classId', requireLogin, async (req, res) => {
     const classId = req.params.classId
 
-    const { title, description } = req.body;
+    const { title, description, coverImage } = req.body;
 
-    
     try {
         const existingClass = await Class.findById(classId);
         if (!existingClass) {
@@ -165,6 +164,10 @@ router.put('/edit/:classId', requireLogin, async (req, res) => {
         
         if(description) {
             existingClass.description = description;
+        }
+
+        if(coverImage){
+            existingClass.coverImage = coverImage;
         }
     
         await existingClass.save();

@@ -10,15 +10,22 @@ const ContentSchema = new Schema({
     },
     contentType: {
         type: String,
-        enum: ['Notes', 'Announcement', 'Assignment'],
+        enum: ['Notes', 'Announcement'],
         required: true,
     },
     description: {
         type: String
     },
-    media: {
-        type: [String]
-    }
+    media: [{
+        type: {
+          type: String,
+          required: true
+        },
+        data: {
+          type: mongoose.Schema.Types.ObjectId, // Reference to the GridFS file object ID
+          required: true
+        }
+      }]
 
 }, {timestamps: true})
 

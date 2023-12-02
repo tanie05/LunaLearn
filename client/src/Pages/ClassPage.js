@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../LandingPage';
 import ContentCard from '../Components/ContentCard';
 import "../PagesCSS/ClassPage.css";
+import BackButton from '../Components/BackButton';
+import StudentList from './StudentList';
+import { AiOutlinePlus } from "react-icons/ai";
+import { BsPeopleFill } from "react-icons/bs";
 
 export default function ClassPage() {
     const {classId} = useParams()
@@ -30,48 +34,78 @@ export default function ClassPage() {
             }
         })
 
-        
     }, [])
 
-    // console.log(classDetails.content);
+    const [showModal, setShowModal] = useState(false);
 
-    // const contentList = classDetails.content.map(item => {
-    //     return (
-    //         <div>
-    //             <h3>{item.contentType}</h3>
-    //             <p>{item.description}</p>
-    //         </div>
-    //     )
-    // })
+    const handleCloseModal = () => {
+      setShowModal(false);
+    };
+
+    const studentNames = [
+        'Jennie',
+        'Lina',
+        'Sam',
+        'Laurel'
+    ]
+
+    const students = studentNames.map((name) => {
+        return (<li>{name}</li>)
+    })
 
     return (
         <div>
+            <BackButton/>
+           
             <div>
             {
                 display &&
-                <div className='class-details'>
+                <div>
                 <div className='class-header'>
                     
                     <div className='title'>{classDetails.class.title}</div>
+
                     {
                     state._id === classDetails.class.teacher &&
-                    <div className='class-code'>Code : {classDetails.class.code}</div>
+                    <div className='class-code'>Code: {classDetails.class.code}</div>
                     } 
+
+                    <div className='class-info-bar'>
+                    
+
+                    <div>
+                        <div onClick={() => setShowModal(true)} className='class-info class-student-list'><BsPeopleFill/></div>
+                        <StudentList show={showModal} handleClose={handleCloseModal}>
+                            <h2 className='student-list-heading'>Students</h2>
+                            <ul>
+                                {students}
+                            </ul>
+                        </StudentList>
+                       
+                    </div>
+
+                    <div>
+                    {
+                        state._id === classDetails.class.teacher &&
+                        <Link className='add-content-button class-info' to={`/createcontent/${classId}`}>
+                            <AiOutlinePlus/>
+                        </Link>
+                    }
+                    </div>
+
+                    </div>
+
                 </div>
+                
                 
                 <div className='description--add--btn'>
                 <div className='description'>
                     {classDetails.class.description}
                 </div>
 
-                <div>
-                    {
-                    state._id === classDetails.class.teacher &&
-                    <Link className='add-content-button' to={`/createcontent/${classId}`}>
-                        Create Content
-                    </Link>
-                    }
-                </div>
+                
+
+                
                 </div>
                 </div>
                 
@@ -79,9 +113,9 @@ export default function ClassPage() {
             }
 
         </div>
-
+<hr/>
         <div>
-            {/* {contentList} */}
+            
             {display && 
                 classDetails.content.map(item => {
                     return (

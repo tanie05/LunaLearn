@@ -2,14 +2,17 @@ import React, { useState, useEffect} from "react";
 import '../PagesCSS/CreateClass.css';
 import {Navigate} from "react-router-dom"
 import { useLocation } from "react-router-dom";
-
+import BackButton from "../Components/BackButton";
 export default function CreateClass() {
+
     const location = useLocation();
-  const  classToEdit = location.state;
+    const  classToEdit = location.state;
+
 
     const [newClass, setNewClass] = useState({
         title: "",
-        description: ""
+        description: "",
+        coverImage: ""
     })
 
     const [redirect, setRedirect] = useState(false);
@@ -18,11 +21,11 @@ export default function CreateClass() {
     useEffect(() => {
         if( classToEdit) {
           setEditMode(true)
-        //   setTitle( classToEdit.title)
-        //   setDescription( classToEdit.description)
+
         setNewClass({
             title : classToEdit.title,
-            description: classToEdit.description
+            description: classToEdit.description,
+            coverImage : classToEdit.coverImage
 
         })
           
@@ -45,10 +48,12 @@ export default function CreateClass() {
     }
 
     function createClass() {
+
         
         if(editMode){
             // editing
             // /edit/:classId
+            console.log(newClass)
             fetch(`/classes/edit/${classToEdit._id}`, {
                 method: "put", 
                 headers: {
@@ -57,7 +62,8 @@ export default function CreateClass() {
                 },
                 body: JSON.stringify({
                     title: newClass.title,
-                    description: newClass.description
+                    description: newClass.description,
+                    coverImage : newClass.coverImage
                 })
             })
             .then(res => res.json())
@@ -81,7 +87,8 @@ export default function CreateClass() {
                 },
                 body: JSON.stringify({
                     title: newClass.title,
-                    description: newClass.description
+                    description: newClass.description,
+                    coverImage: newClass.coverImage
                 })
             })
             .then(res => res.json())
@@ -102,9 +109,23 @@ export default function CreateClass() {
     if(redirect){
         return <Navigate to={'/'} />
     }
+
+    function updateCoverImage(event){
+        const file = event.target.files[0];
+        
+        setNewClass((prev) => {
+            return ({
+                ...prev,
+                coverImage: file
+            })
+        })
+    }
+
+   
     
     return (
         <div className="create-class-page">
+            <BackButton/>
             
             <div className="create-class-form">
             <input 
@@ -125,10 +146,21 @@ export default function CreateClass() {
             >
             </textarea>
 
+            <input
+            type="file"
+            name="coverImage"
+            className="input--class--image" // Style this as needed
+            accept="image/*" // Allow only image files to be selected
+            onChange={updateCoverImage} // Call function when a file is selected
+            />
+
             <button className="submit-btn" type="submit" onClick={createClass}>
                 {editMode? "Edit" : "Create Class"}
                 
-                </button>
+            </button>
+
+
+
         </div>
         </div>
                
