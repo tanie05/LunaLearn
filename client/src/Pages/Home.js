@@ -25,9 +25,6 @@ export default function Home() {
             }
         })
     }, [])
-
-    // console.log(state);
-
     
     return (
         <div className="class-cards-container">

@@ -14,6 +14,8 @@ export default function SignUp() {
         role: "Teacher"
     })
 
+    const [msg, setMsg] = useState("");
+
 
     function updateUser(e) {
         const {name, value} = e.target
@@ -47,8 +49,9 @@ export default function SignUp() {
                 alert(data.Error);
             }
             else {
-                console.log(data.Message);
-                navigate("/auth/signin");
+                setMsg(data.Message)
+                // console.log(data.Message);
+                // navigate("/auth/signin");
             }
         })
         .catch(err => {
@@ -125,6 +128,11 @@ export default function SignUp() {
 
             <div className="message">Already Have an account?
                 <NavLink style={{textDecoration: "none", color: "rgb(8,38,74)"}} to="/auth/signin"> Log In</NavLink>
+            </div>
+            <div>
+                {msg && 
+                    <div>{msg}</div>
+                }
             </div>
         </div>
         </div>
