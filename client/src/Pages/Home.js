@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import ClassCard from "../Components/ClassCard"
 import { UserContext } from "../LandingPage";
 
+
+
 export default function Home() {
     const {state} = React.useContext(UserContext);
     const [classes, setClasses] = useState([]);
@@ -27,7 +29,7 @@ export default function Home() {
     }, [])
 
     // console.log(state);
-
+    
     
     return (
         <div className="class-cards-container">

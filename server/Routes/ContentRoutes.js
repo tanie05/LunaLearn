@@ -5,7 +5,7 @@ const Content = require('../Models/ContentModel')
 // creating content
 router.post('/', requireLogin, async (req,res) => {
     const {contentType, description, media, classId} = req.body;
-    
+     
     try{
         const newContent = await new Content({
             contentType, 
@@ -21,6 +21,7 @@ router.post('/', requireLogin, async (req,res) => {
     }
 });
 
+// contentRoutes.js
 
 // View single content
 router.get('/:contentId', requireLogin, async (req, res) => {

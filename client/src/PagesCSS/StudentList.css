@@ -1,0 +1,36 @@
+/* Modal.css */
+.modal {
+  
+  position: fixed;
+  left: 400px;
+  top: 200px;
+  padding: 20px;
+  width: 400px;
+  margin: 0 auto;
+  background-color: white;
+
+  }
+  
+  .modal-main {
+    
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid black;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .display-block {
+    display: block;
+  }
+  
+  .display-none {
+    display: none;
+  }
+  
+  .student-list-btn{
+    padding: 5px 8px;
+    background-color: aliceblue;
+    font-size: 15px;
+    color: black;
+  }

@@ -5,6 +5,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "./LandingPage";
 import './PagesCSS/Navbar.css'
 import lunaicon from './lunaIcon.jpg';
+import { MdOutlineChecklist } from "react-icons/md";
+
 export default function NavBar() {
 
     const navigate = useNavigate();
@@ -36,8 +38,15 @@ export default function NavBar() {
                 </div>
 
                 <div className="welcome-message">Welcome {state.username}!</div>
+
+                {/* <label class="switch">
+                <input type="checkbox"/>
+                <span class="slider round"></span>
+                </label> */}
                 
                 <div className="navbar--links">
+
+                    <NavLink to = {'/todo'} style={{color: "black"}}> <MdOutlineChecklist/> </NavLink>
                     <NavLink style={{textDecoration: 'none', color: "black"}} to = {role === "Teacher" ? "classes/createClass" : "classes/joinClass"}>
                         <div className="navbar--links--cont">
                             <AiOutlinePlus />

@@ -32,15 +32,7 @@ export default function ClassCard(props) {
         })
     }, [])
 
-    const [randomColor, setRandomColor] = useState("");
-
-    const colors = [
-        "#6FB1FC", // Soft Blue
-        "#AED581", // Light Green
-        "#FFD3E0", // Subtle Pink
-        "#B39DDB", // Muted Purple
-        "#FFEE58"  // Gentle Yellow
-    ];
+   
     useEffect(() => {
         fetch(`/users/${props.item.teacher}`, {
             headers: {
@@ -56,8 +48,7 @@ export default function ClassCard(props) {
                 setTeacher(data.user);
             }
         });
-        const randomColor = colors[Math.floor(Math.random() * colors.length)];
-        setRandomColor(randomColor);
+        
     }, []);
 
 
@@ -88,22 +79,32 @@ export default function ClassCard(props) {
     if(redirect){
         return <Navigate to={`/`} />
     }
+
+    
    
     return (
         
             <div className="class-card-container">
-
-            <NavLink to={`classes/${props.item._id}`} className="navlink">
-            <div className="class-card-info" style={{ backgroundColor: randomColor }}>
-                                <div className="card-items class-title" >{props.item.title}</div>
-                                <div className="card-items teacher-name">Teacher : {teacher.username}</div>
-                            </div>
+            
+            <div className="class-card-info class-card-image">
+            <NavLink to={`classes/${props.item._id}`} style={{textDecoration: "none"}}>
+            
+            <div class="class-card-image"></div>
+            <div className="card-items class-title">{props.item.title}</div>
+            <div className="card-items teacher-name">Teacher : {teacher.username}</div>
+            
             </NavLink>
+            </div>
+           
+            
                
             
                 {state._id === props.item.teacher && 
+                
+                    <hr/> 
+                    &&
                     <div className="class-card-icon-containers">
-                         <div className="class-code class-code-card" style={{color: "black"}}>Code : {props.item.code}</div>
+                         {/* <div className="class-code class-code-card" style={{color: "black"}}>Code : {props.item.code}</div> */}
                         <div className="iconsss">
                         <Link to= {'/classes/createClass'} state= {props.item} >
                         <BiSolidEditAlt className="card-items" />

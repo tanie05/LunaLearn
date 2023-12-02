@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import '../PagesCSS/JoinClass.css'
-
+import BackButton from "../Components/BackButton";
 export default function JoinClass() {
     const navigate = useNavigate()
 
@@ -38,6 +38,7 @@ export default function JoinClass() {
 
     return (
         <div className="join--class">
+            <BackButton/>
         <div className="join--class--form">
             <input 
                 className="input--class--code"

@@ -9,8 +9,7 @@ import CreateClass from "./Pages/CreateClass";
 import JoinClass from "./Pages/JoinClass";
 import ClassPage from "./Pages/ClassPage";
 import CreateContentForm from "./Pages/CreateContentForm";
-
-
+import TodoPage from "./Pages/TodoPage";
 export const UserContext = React.createContext()
 
 const Routing = () => {
@@ -40,8 +39,9 @@ const Routing = () => {
             <Route exact path="classes/joinClass" Component={JoinClass}></Route>
             <Route exact path="classes/:classId" Component={ClassPage}></Route>
             <Route exact path="createcontent/:classId" Component={CreateContentForm}></Route>
+            {/* <Route exact path="todo" Component={Todolist}></Route> */}
+            <Route exact path="todo" Component={TodoPage}></Route>
             
-
         </Route>
     </Routes>
   )
