@@ -161,16 +161,16 @@ export default function CreateContentForm() {
         />
 
         <input 
-        className='content-input-media'
-        type='file' 
-        onChange={handleMediaUpload} 
-        multiple accept="image/*, video/*, application/pdf" 
+          className='content-input-media'
+          type='file' 
+          onChange={handleMediaUpload} 
+          multiple accept="image/*, video/*, application/pdf" 
         />
         
         <input 
-        className='submit-btn'
-        value= 'Submit' 
-        type = 'submit' 
+          className='submit-btn'
+          value= 'Submit' 
+          type = 'submit' 
         />
 
       </form>

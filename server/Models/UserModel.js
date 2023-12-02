@@ -29,6 +29,10 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Class'
     },
+    verified: {
+        type: Boolean,
+        default: false
+    }
     
 }, {timestamps: true})
 
