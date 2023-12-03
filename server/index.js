@@ -19,12 +19,14 @@ mongoose.connection.on("error", (err) => {
 
 require("./Models/UserModel")
 require("./Models/ClassModel")
+require("./Models/DiscussionModel")
 
 const authRouter = require('./Routes/AuthRoute')
 const classRouter = require('./Routes/ClassRoutes')
 const contentRouter = require('./Routes/ContentRoutes')
 const user = require('./Routes/UserRoutes')
 const todoRouter = require('./Routes/TodoRoutes')
+const discussionsRouter = require('./Routes/DiscussionRoutes')
 const cors = require('cors');
 app.use(cors());
 
@@ -35,6 +37,7 @@ app.use('/classes', classRouter)
 app.use('/contents', contentRouter)
 app.use('/users', user)
 app.use('/todos', todoRouter)
+app.use('/classes', discussionsRouter)
 
 
 app.listen(PORT, () => {
