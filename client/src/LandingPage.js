@@ -10,6 +10,12 @@ import JoinClass from "./Pages/JoinClass";
 import ClassPage from "./Pages/ClassPage";
 import CreateContentForm from "./Pages/CreateContentForm";
 import EmailVerified from "./Pages/EmailVerified";
+<<<<<<< HEAD
+=======
+import DiscussionForum from "./Pages/DiscussionPage";
+
+
+>>>>>>> ce6550780ced43d9aa4feb37e2a55246fc0a622c
 import TodoPage from "./Pages/TodoPage";
 export const UserContext = React.createContext()
 
@@ -50,6 +56,7 @@ const Routing = () => {
             <Route exact path="classes/createClass" Component={CreateClass}></Route>
             <Route exact path="classes/joinClass" Component={JoinClass}></Route>
             <Route exact path="classes/:classId" Component={ClassPage}></Route>
+            <Route exact path="classes/:classId/discussions" Component={DiscussionForum}></Route>
             <Route exact path="createcontent/:classId" Component={CreateContentForm}></Route>
             <Route exact path="/todo" Component={TodoPage}></Route>
             

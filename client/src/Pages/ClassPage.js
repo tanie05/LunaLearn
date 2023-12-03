@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../LandingPage';
 import ContentCard from '../Components/ContentCard';
@@ -8,6 +8,7 @@ import BackButton from '../Components/BackButton';
 import StudentList from './StudentList';
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsPeopleFill } from "react-icons/bs";
+import { GoCommentDiscussion } from "react-icons/go";
 
 export default function ClassPage() {
     const {classId} = useParams()
@@ -113,6 +114,12 @@ export default function ClassPage() {
                             </ul>
                         </StudentList>
                        
+                    </div>
+
+                    <div>
+                        <NavLink style={{textDecoration: 'none', color: "black", fontSize: "25px"}} to={`/classes/${classId}/discussions`}>
+                            <GoCommentDiscussion />
+                        </NavLink>
                     </div>
 
                     <div>
