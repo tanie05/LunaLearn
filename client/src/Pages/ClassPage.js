@@ -9,6 +9,7 @@ import StudentList from './StudentList';
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsPeopleFill } from "react-icons/bs";
 import { GoCommentDiscussion } from "react-icons/go";
+import axios from 'axios'
 
 export default function ClassPage() {
     const {classId} = useParams()
@@ -17,6 +18,7 @@ export default function ClassPage() {
     const [classDetails, setClassDetails] = useState({})
     const [filteredContent, setFilteredContent] = useState([]);
     const [display, setDisplay] = useState(false)
+    const [studentNames, setStudentNames]  = useState([])
 
     useEffect(() => {
         fetch(`/classes/${classId}`, {
@@ -37,6 +39,16 @@ export default function ClassPage() {
             }
         })
 
+        axios.get(`/classes/class_students/${classId}`)
+        .then((res) => {
+            setStudentNames(res.data.students)
+            // console.log('Response:', res.data.students); 
+        })
+        .catch((error) => {
+            
+            console.error('Error:', error);
+        });
+
     }, [])
 
     const [showModal, setShowModal] = useState(false);
@@ -45,15 +57,8 @@ export default function ClassPage() {
       setShowModal(false);
     };
 
-    const studentNames = [
-        'Jennie',
-        'Lina',
-        'Sam',
-        'Laurel'
-    ]
-
-    const students = studentNames.map((name) => {
-        return (<li>{name}</li>)
+    const students = studentNames.map((item) => {
+        return (<li>{item.username} - {item.email}</li>)
     })
 
     const [contentType, setContentType] = useState("");
@@ -80,8 +85,6 @@ export default function ClassPage() {
         e.preventDefault();
         setContentType("")
         setFilteredContent(classDetails.content)
-
-
     }
 
     return (
@@ -101,7 +104,6 @@ export default function ClassPage() {
                     state._id === classDetails.class.teacher &&
                     <div className='class-code'>Code: {classDetails.class.code}</div>
                     } 
-
                     <div className='class-info-bar'>
                     
 
@@ -117,7 +119,7 @@ export default function ClassPage() {
                     </div>
 
                     <div>
-                        <NavLink style={{textDecoration: 'none', color: "black", fontSize: "25px"}} to={`/classes/${classId}/discussions`}>
+                        <NavLink style={{textDecoration: 'none', color: "black", fontSize: "25px", margin: " 0px 5px"}} to={`/classes/${classId}/discussions`}>
                             <GoCommentDiscussion />
                         </NavLink>
                     </div>
@@ -146,7 +148,9 @@ export default function ClassPage() {
 
         </div>
         <hr/>
-        <form className='filter-form' onSubmit={filterContent}>
+        {
+            (classDetails.content && classDetails.content.length>0) && 
+            <form className='filter-form' onSubmit={filterContent}>
                 <select
                     className="filter-form-input"
                     value={contentType}
@@ -159,6 +163,9 @@ export default function ClassPage() {
                 <button onClick={clearFilter} className='filter-content-btn'>Clear</button>
                 <input type='submit' value='Filter' className='filter-content-btn'/>
             </form>
+           
+            
+        }
 
         <div>
             

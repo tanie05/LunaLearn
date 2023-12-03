@@ -84,6 +84,7 @@
   .filter-form-input {
     /* Add your styles for the select input */
     padding: 8px;
+    font-size: 20px;
     /* Additional styles */
     margin-right: 10px; /* Adjust spacing */
   }
@@ -91,7 +92,17 @@
   .filter-content-btn {
     /* Add your styles for the buttons */
     padding: 8px 16px;
-    /* Additional styles */
+    background-color: #6cab74;
     cursor: pointer;
+    margin-right: 5px;
+    border: 1px black solid;
+    border-radius: 3px;
+    font-size: 20px;
+  }
+
+  .student-list-heading{
+    color: #6cab74;
+    font-size: 30px;
+    font-family: 'Pacifico';
   }
   

@@ -4,6 +4,8 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import '../PagesCSS/Todo.css'
 import 'react-datepicker/dist/react-datepicker.css';
+import { MdDelete } from "react-icons/md";
+import BackButton from '../Components/BackButton';
 
 
 
@@ -14,8 +16,8 @@ export default function TodoPage() {
   const [todolist, setTodolist] = useState([])
   const [newTodo, setNewTodo] = useState({todo: "", dueDate: "", subject: "", userId : state._id})
 
-  console.log(state._id)
-  
+  // console.log(state._id)
+  const [redirect, setRedirect] = useState(false);
  
 
 useEffect(() => {
@@ -36,7 +38,7 @@ useEffect(() => {
     .catch(error => {
       console.error("Error fetching todos:", error);
     });
-}, []);
+}, [redirect]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -60,9 +62,36 @@ useEffect(() => {
     }
   };
 
-  const displayTodo = todolist.map(todo => {
-    return (<li>{todo.todo} due on {formatDate(todo.dueDate)}</li>)
-  })
+  function deleteTodo(todoId) {
+    axios.delete(`/todos/${todoId}`, 
+    {headers: {
+      "Authorization": "Bearer " + localStorage.getItem("jwt")
+    }})
+      .then(response => {
+        // Refresh the todo list after creating a new todo
+        axios.get(`/todos/user/${state._id}`, {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('jwt')
+          }
+        })
+        .then(response => {
+          const newData = response.data;
+          if (newData.error) {
+            console.log('Error fetching todos:', newData.error);
+          } else {
+            setTodolist(newData.data);
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching todos:', error);
+        });
+      })
+      .catch(error => {
+        console.error(`Error deleting todo with ID ${todoId}:`, error);
+      });
+  }
+  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,7 +103,7 @@ useEffect(() => {
       });
       const data = response.data;
       if (data.success) {
-        console.log('Todo created successfully');
+        // console.log('Todo created successfully');
         setNewTodo({ todo: '', dueDate: '', subject: '', userId: state._id });
         // Refresh the todo list after creating a new todo
         axios.get(`/todos/user/${state._id}`, {
@@ -99,12 +128,13 @@ useEffect(() => {
     }
   };
 
-
+ 
 
   return (
     <div>
-      <h1>To-do List</h1>
-      <h3>Add a new Todo!</h3>
+      <BackButton/>
+      <h1 className='todo-main-heading'>To-do List</h1>
+      <h3 className='todo-sub-heading'>Add a new Todo!</h3>
 
       <form onSubmit={handleSubmit} className="todo-form">
         <input
@@ -121,20 +151,28 @@ useEffect(() => {
           placeholderText="Due Date"
           className="date-picker"
         />
-        <input
+        {/* <input
           type="text"
           placeholder="Subject"
           value={newTodo.subject}
           onChange={(e) => setNewTodo({ ...newTodo, subject: e.target.value })}
           className="subject-input"
-        />
+        /> */}
         <button type="submit" className="submit-btn">Add Todo</button>
       </form>
 
       <hr />
 
       <ul className="todo-list">
-        {displayTodo}
+        {todolist.map(todo => {
+          return (
+            <div className='single-todo'>
+            {todo.todo} due on {formatDate(todo.dueDate)}
+            <MdDelete onClick={(e) => deleteTodo(todo._id)} classsName = 'todo-delete-icon'/>
+            </div>
+          )
+        
+        })}
       </ul>
 
     </div>

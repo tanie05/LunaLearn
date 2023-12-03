@@ -44,9 +44,10 @@
 
 
 .content-submit {
-  background-color: #3498db;
+  background-color: #6cab74;
   color: white;
   cursor: pointer;
+  font-size: 20px;
 }
 
 .class-back-btn{

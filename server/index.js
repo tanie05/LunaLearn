@@ -26,11 +26,7 @@ const classRouter = require('./Routes/ClassRoutes')
 const contentRouter = require('./Routes/ContentRoutes')
 const user = require('./Routes/UserRoutes')
 const todoRouter = require('./Routes/TodoRoutes')
-<<<<<<< HEAD
-
-=======
 const discussionsRouter = require('./Routes/DiscussionRoutes')
->>>>>>> ce6550780ced43d9aa4feb37e2a55246fc0a622c
 const cors = require('cors');
 app.use(cors());
 app.use(express.json())

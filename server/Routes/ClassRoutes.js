@@ -198,5 +198,27 @@ router.put('/delete/:classId', requireLogin, async (req, res) => {
       }
 })
 
-
+router.get('/class_students/:classId', async (req, res) => {
+    const classId = req.params.classId;
+  
+    try {
+      const classObj = await Class.findById(classId);
+      if (!classObj) {
+        return res.status(404).json({ message: 'Class not found' });
+      }
+  
+      const studentIds = classObj.students;
+      const students = await User.find({ _id: { $in: studentIds } }, 'username email');
+  
+      if (!students || students.length === 0) {
+        return res.status(404).json({ message: 'No students found in this class' });
+      }
+  
+      res.status(200).json({ students });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Server Error' });
+    }
+  });
+  
 module.exports = router;

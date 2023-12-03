@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { UserContext } from "../LandingPage";
 import { useParams } from "react-router";
 import "../PagesCSS/DiscussionPage.css"
+import { Link } from "react-router-dom";
+import { IoMdArrowBack } from 'react-icons/io';
 
 export default function DiscussionForum() {
     const {state, dispatch} = React.useContext(UserContext)
@@ -63,6 +65,9 @@ export default function DiscussionForum() {
 
     return (
         <div className="discussion--page">
+    <Link  to={`/classes/${classId}`} className='class-back-btn'>
+      <IoMdArrowBack/>
+      </Link>
             <div className="discussion--page--list">
                 {messages.length > 0 && 
                     messages.map(message => {

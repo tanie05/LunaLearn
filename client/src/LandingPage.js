@@ -10,12 +10,8 @@ import JoinClass from "./Pages/JoinClass";
 import ClassPage from "./Pages/ClassPage";
 import CreateContentForm from "./Pages/CreateContentForm";
 import EmailVerified from "./Pages/EmailVerified";
-<<<<<<< HEAD
-=======
 import DiscussionForum from "./Pages/DiscussionPage";
 
-
->>>>>>> ce6550780ced43d9aa4feb37e2a55246fc0a622c
 import TodoPage from "./Pages/TodoPage";
 export const UserContext = React.createContext()
 
