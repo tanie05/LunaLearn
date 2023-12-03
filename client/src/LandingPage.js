@@ -10,8 +10,6 @@ import JoinClass from "./Pages/JoinClass";
 import ClassPage from "./Pages/ClassPage";
 import CreateContentForm from "./Pages/CreateContentForm";
 import EmailVerified from "./Pages/EmailVerified";
-
-
 import TodoPage from "./Pages/TodoPage";
 export const UserContext = React.createContext()
 
@@ -27,7 +25,6 @@ const Routing = () => {
         
         if (user) {
             dispatch({ type: "USER", payload: user });
-
             navigate("/");
         } else {
             if (token) {
@@ -54,8 +51,8 @@ const Routing = () => {
             <Route exact path="classes/joinClass" Component={JoinClass}></Route>
             <Route exact path="classes/:classId" Component={ClassPage}></Route>
             <Route exact path="createcontent/:classId" Component={CreateContentForm}></Route>
-            {/* <Route exact path="todo" Component={Todolist}></Route> */}
-            <Route exact path="todo" Component={TodoPage}></Route>
+            <Route exact path="/todo" Component={TodoPage}></Route>
+            
             
         </Route>
     </Routes>

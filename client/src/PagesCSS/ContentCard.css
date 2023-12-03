@@ -1,36 +1,36 @@
 .content-card {
-  display: flex;
-  flex-direction: column;
-  padding: 15px;
-  margin: 20px;
-  width: 60%;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 70%;
 }
 
 .heading {
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bold;
-  padding-bottom: 10px;
   margin-bottom: 10px;
-  border-bottom: 1px solid #ccc;
 }
 
-.content-description {
-  max-height: 20px;
-  overflow: hidden;
-  margin-bottom: 10px;
-}
 
 .icons-container {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
 }
 
 .icon-items {
-  font-size: 20px;
-  padding: 5px;
+  font-size: 24px;
+  margin-left: 10px;
+  cursor: pointer;
   color: black;
+}
+
+.content-description{
+  width: 100px;
+}
+
+.inner-div{
+  font-weight: bold;
   cursor: pointer;
 }

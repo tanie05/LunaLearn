@@ -58,11 +58,16 @@ export default function ContentCard(props) {
     return (<Navigate to = {`/classes/${props.item.classId}`} />)
   }
 
+  const showPdf = (pdf) => {
+    window.open(`http://localhost:5000/files/${pdf}`, "_blank", "noreferrer");
+    
+  };
+
   return (
     <div className="content-card">
-      {/* <h2 className='content-title'>{contentType}</h2> */}
+      
       <p className='heading'>{teacherName} Posted {contentType}</p>
-      <p className='content-description'>{description}</p>
+      <p className='content-card-description'>{description}</p>
 
       {
         teacher === state._id
@@ -79,17 +84,18 @@ export default function ContentCard(props) {
       </div>
       }
 
+      {
+        props.item.media && 
       <div className="media-container">
-        {media.map((item, index) => (
-          <div key={index} className="media-item">
-            {item.type === 'image/jpeg' || item.type === 'image/png' ? (
-              <img src={item.data} alt={`Media ${index + 1}`} />
-            ) : (
-              <div>{item.type}</div>
-            )}
+      <div className="inner-div">
+          <div
+            className="btn btn-primary"
+            onClick={() => showPdf(props.item.media)}
+          >
+            {props.item.media}
           </div>
-        ))}
       </div>
+      </div>}
     </div>
   );
 }

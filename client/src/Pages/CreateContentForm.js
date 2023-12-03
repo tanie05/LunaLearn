@@ -1,180 +1,124 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router';
+import React, {useEffect, useState } from 'react'
+import axios from 'axios';
 import '../PagesCSS/CreateContent.css';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams, useLocation, Link, } from 'react-router-dom';
+import BackButton from '../Components/BackButton';
+import { IoMdArrowBack } from 'react-icons/io';
+
 
 export default function CreateContentForm() {
-  
+
+  const {classId} = useParams()
   const location = useLocation();
   const contentToEdit = location.state;
-    
-  const { classId } = useParams();
 
-  // console.log(classId)
-  const [content, setContent] = useState({
-    contentType: '',
-    description: '',
-    media: [],
-    classId: classId
-  });
-
-  function handleTypeChange(e) {
-    setContent((prevValue) => {
-      return { ...prevValue, contentType: e.target.value };
-    });
-  }
-
-  function handleDescriptionChange(e) {
-    setContent((prevValue) => {
-      return { ...prevValue, description: e.target.value };
-    });
-  }
-
-  const handleMediaUpload = (e) => {
-    const uploadedFiles = e.target.files;
-    const mediaPreviews = [];
-
-    for (let i = 0; i < uploadedFiles.length; i++) {
-      const file = uploadedFiles[i];
-      const reader = new FileReader();
-
-      reader.onload = (event) => {
-        mediaPreviews.push({ type: file.type, data: event.target.result });
-
-        if (mediaPreviews.length === uploadedFiles.length) {
-          setContent((prevValue) => {
-            return { ...prevValue, media: mediaPreviews };
-          });
-        }
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-
+  const [description, setDescription] = useState("")
+  const [contentType, setContentType] = useState("")
+  const [file, setFile] = useState("");
   const [redirect, setRedirect] = useState(false);
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(false)
+  
 
   useEffect(() => {
-    if(contentToEdit){
-
-      setEditMode(true);
-
-      setContent({
-        contentType: contentToEdit.contentType,
-        description: contentToEdit.description,
-        media: contentToEdit.media,
-        classId: contentToEdit.classId
-      })
+    if(contentToEdit) {
+    setEditMode(true)
+    setDescription(contentToEdit.description)
+    setContentType(contentToEdit.contentType)
     }
-  },[])
+}, [])
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    console.log(content);
+  const submitImage = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
 
+    formData.append("description", description);
+    formData.append("contentType", contentType);
+    formData.append("classId", classId);
+    formData.append("file", file);
+
+    console.log(classId)
+    
     if(editMode){
-      // editing
-      // /edit/:contentId
-      // console.log(content)
-
-      fetch(`/contents/edit/${contentToEdit._id}`, {
-        method: "put",
-        headers: {
-          "Content-Type" : "application/json",
-          "Authorization" : "Bearer " + localStorage.getItem("jwt")
-        },
-        body: JSON.stringify({
-          contentType: content.contentType,
-          description: content.description,
-          media: content.media,
-          classId: content.classId
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if(data.success){
-          setRedirect(true);
-        }
-        else{
-          console.log("Failed to edit the content")
-        }
-      })
-    }
-    else{
-
-      // creating content
-      fetch("/contents/", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
+      const result = await axios.put(
+        `/contents/edit/${contentToEdit._id}`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
           "Authorization": "Bearer " + localStorage.getItem("jwt")
-        },
-        body: JSON.stringify({
-          contentType: content.contentType,
-          description: content.description,
-          media: content.media,
-          classId: content.classId
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          console.log(data.message);
-          setRedirect(true);
-        } else {
-          console.log("Failed to create content");
         }
-        console.log(data)
-      })
-      .catch(error => {
-        // console.error('Error:', error);
-        alert(error)
-      });
-    }
-          
-  }
+      );
+      
+      if (result) {
+        alert("Edited Successfully!!!");
+        setRedirect(true)
+      }
 
+
+    }else{
+      const result = await axios.post(
+        "/contents/",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+          "Authorization": "Bearer " + localStorage.getItem("jwt")
+        }
+      );
+      
+      if (result) {
+        alert("Uploaded Successfully!!!");
+        setRedirect(true)
+      }
+    }
+
+    
+  };
+  
   if(redirect){
-    return (<Navigate to = {`/classes/${content.classId}`} />) 
-  }
+    return <Navigate to={`/classes/${classId}`} />
+}
+
 
   return (
-    <div className='content-form-container'>
-
-      <form className='content-form' onSubmit={handleSubmit}>
-
-        <select className='content-input-select' value={content.contentType} onChange={(e) => handleTypeChange(e)}>
-
-          <option value=''>Type of Content</option>
-          <option value='Notes'>Notes</option>
-          <option value='Assignment'>Assignment</option>
-          <option value='Announcement'>Announcement</option>
-
-        </select>
-
-        <input
-          className='content-input-description'
-          value={content.description}
-          placeholder='Description'
-          onChange={(e) => handleDescriptionChange(e)}
-        />
-
-        <input 
-          className='content-input-media'
-          type='file' 
-          onChange={handleMediaUpload} 
-          multiple accept="image/*, video/*, application/pdf" 
-        />
+    <div className="create-content-form">
+      <Link  to={`/classes/${classId}`} className='class-back-btn'>
+      <IoMdArrowBack/>
+      </Link>
+      
+      <h4 className='create-content-heading'>Create a content</h4>
+      <form className="create-content-form" onSubmit={submitImage}>
         
-        <input 
-          className='submit-btn'
-          value= 'Submit' 
-          type = 'submit' 
+        <br />
+        <textarea
+          className="create-content-form-element content-description"
+          placeholder="Description"
+          required
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
 
+        <br />
+        <select
+          className="create-content-form-element content-type"
+          value={contentType}
+          onChange={(e) => setContentType(e.target.value)}
+          required
+        >
+          <option value="">Select Content Type</option>
+          <option value="Notes">Notes</option>
+          <option value="Announcement">Announcement</option>
+        </select>
+        
+        <br />
+        <input
+          type="file"
+          onChange={(e) => setFile(e.target.files[0])}
+          className='create-content-form-element content-file-select'
+        />
+        <br />
+        <button type="submit" className='create-content-form-element content-submit'>
+          {editMode ? "Edit" : "Create"}
+        </button>
       </form>
-
     </div>
   );
 }

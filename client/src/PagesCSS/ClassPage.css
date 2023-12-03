@@ -74,3 +74,24 @@
     font-family: 'Roboto';
 
 }
+.filter-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .filter-form-input {
+    /* Add your styles for the select input */
+    padding: 8px;
+    /* Additional styles */
+    margin-right: 10px; /* Adjust spacing */
+  }
+  
+  .filter-content-btn {
+    /* Add your styles for the buttons */
+    padding: 8px 16px;
+    /* Additional styles */
+    cursor: pointer;
+  }
+  

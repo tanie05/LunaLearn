@@ -1,54 +1,57 @@
 const router = require('express').Router()
 const requireLogin = require('../Middleware/requireLogin')
-const Content = require('../Models/ContentModel')
+const Content = require('../Models/ContentModel')  
+const multer = require("multer");
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./files");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+
+router.post("/" ,upload.single("file"), async (req, res) => {
   
-// creating content
-router.post('/', requireLogin, async (req,res) => {
-    const {contentType, description, media, classId} = req.body;
-     
-    try{
-        const newContent = await new Content({
+  const { description, contentType, classId } = req.body;
+  const media = req.file ? req.file.filename : ""
+
+  try {
+    const newContent = await new Content({
             contentType, 
             description,
             media,
             classId
         }).save();
-    
-        res.json({ success: true, message: 'Content created successfully' });
-    }
-    catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
+    res.send({ status: "ok" , success: true});
+  } catch (error) {
+    console.error('Error saving content to MongoDB:', error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
-// contentRoutes.js
+router.get("/:classId",requireLogin, async (req, res) => {
+  try {
+    const classId = req.params.classId;
 
-// View single content
-router.get('/:contentId', requireLogin, async (req, res) => {
-    const contentId = req.params.contentId
-
-    try {
-        const content = await Content.findById(contentId)
-
-        if(!content) {
-            res.status(400).json({ error: 'Invalid content Id' })
-        }
-        else {
-            res.json({ content: content })
-        }
-    }
-    catch (error) {
-        console.log(error);
-        res.status(500).json('Server error')
-    }
-})
-
+    Content.find({classId}).then((data) => {
+      res.send({ status: "OK", data: data });
+    });
+  } catch (error) {}
+});
 
 // Updating content
-router.put('/edit/:contentId', requireLogin, async (req, res) => {
+router.put('/edit/:contentId',upload.single("file"),  async (req, res) => {
     const contentId = req.params.contentId
 
-    const { description, media, contentType, classId } = req.body;
+    const { description, contentType, classId } = req.body;
+    const media = req.file ? req.file.filename : ""
 
     try {
         const existingContent = await Content.findById(contentId)
@@ -57,9 +60,9 @@ router.put('/edit/:contentId', requireLogin, async (req, res) => {
             res.status(404).json({ error: 'Content not found' })
         }
 
-        if(media) {
-            existingContent.media = media;
-        }
+        
+        existingContent.media = media;
+        
         if(description) {
             existingContent.description = description;
         }
@@ -69,7 +72,6 @@ router.put('/edit/:contentId', requireLogin, async (req, res) => {
         if(classId){
             existingContent.classId = classId;
         }
-
         
         await existingContent.save();
 

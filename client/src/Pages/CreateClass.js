@@ -6,7 +6,7 @@ import BackButton from "../Components/BackButton";
 export default function CreateClass() {
 
     const location = useLocation();
-    const  classToEdit = location.state;
+    const classToEdit = location.state;
 
 
     const [newClass, setNewClass] = useState({

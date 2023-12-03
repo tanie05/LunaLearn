@@ -14,6 +14,7 @@ export default function ClassPage() {
     const {state, dispatch} = React.useContext(UserContext)
 
     const [classDetails, setClassDetails] = useState({})
+    const [filteredContent, setFilteredContent] = useState([]);
     const [display, setDisplay] = useState(false)
 
     useEffect(() => {
@@ -28,8 +29,9 @@ export default function ClassPage() {
                 console.log(data.error);
             }
             else {
-                // console.log(data);
+                console.log(data);
                 setClassDetails(data)
+                setFilteredContent(data.content)
                 setDisplay(true)
             }
         })
@@ -53,8 +55,37 @@ export default function ClassPage() {
         return (<li>{name}</li>)
     })
 
+    const [contentType, setContentType] = useState("");
+    // classDetails.content
+    const filterContent = (e) => {
+        e.preventDefault();
+
+        if(contentType === ""){
+            setFilteredContent(classDetails.content)
+        }
+    
+        if (contentType && classDetails.content) {
+            const filteredContent = classDetails.content.filter((item) => item.contentType === contentType);
+            setFilteredContent(filteredContent);
+        }
+        
+    };
+
+    const handleContentTypeChange = (e) => {
+        setContentType(e.target.value);
+    };
+
+    const clearFilter = (e) => {
+        e.preventDefault();
+        setContentType("")
+        setFilteredContent(classDetails.content)
+
+
+    }
+
     return (
         <div>
+            
             <BackButton/>
            
             <div>
@@ -102,27 +133,33 @@ export default function ClassPage() {
                 <div className='description'>
                     {classDetails.class.description}
                 </div>
-
-                
-
-                
                 </div>
                 </div>
-                
-               
             }
 
         </div>
-<hr/>
+        <hr/>
+        <form className='filter-form' onSubmit={filterContent}>
+                <select
+                    className="filter-form-input"
+                    value={contentType}
+                    onChange={(e) => handleContentTypeChange(e)}   
+                >
+                    <option value="">Select Content Type</option>
+                    <option value="Notes">Notes</option>
+                    <option value="Announcement">Announcement</option>
+                </select>
+                <button onClick={clearFilter} className='filter-content-btn'>Clear</button>
+                <input type='submit' value='Filter' className='filter-content-btn'/>
+            </form>
+
         <div>
             
-            {display && 
-                classDetails.content.map(item => {
-                    return (
-                        <ContentCard item = {item} teacherId = {classDetails.class.teacher} />
-                    )
-                })
-            }
+        {display && (
+                    (filteredContent.length > 0 ? filteredContent : classDetails.content).map(item => (
+                        <ContentCard key={item._id} item={item} teacherId={classDetails.class.teacher} />
+                    ))
+                )}
         </div>
         </div>
         
