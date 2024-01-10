@@ -44,7 +44,7 @@ export default function Home() {
                 })
             }
             {
-                state && (flag ? classes.length === 1 && <h3>No result</h3> : <h3>Loading...</h3>)
+                state && (flag ? classes.length === 0 && <h3>No result</h3> : <h3>Loading...</h3>)
             }
         </div>
     )
